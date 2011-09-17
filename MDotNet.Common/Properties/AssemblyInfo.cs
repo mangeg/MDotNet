@@ -1,21 +1,18 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Markup;
 using MDotNet.Common;
 
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle( "MDotNet.WPF" )]
-[assembly: AssemblyDescription( "" )]
+[assembly: AssemblyTitle( "MDotNet.Common" )]
+[assembly: AssemblyDescription( "Common libraries for MDotNet" )]
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( AppInfo.CompanyName )]
-[assembly: AssemblyProduct( "MDotNet.WPF" )]
+[assembly: AssemblyProduct( "MDotNet.Common" )]
 [assembly: AssemblyCopyright( AppInfo.CopyrightNote )]
 [assembly: AssemblyTrademark( "" )]
-[assembly: AssemblyCulture( "" )]
+[assembly: AssemblyCulture( "en-US" )]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -23,16 +20,7 @@ using MDotNet.Common;
 [assembly: ComVisible( false )]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid( "4d595593-2ffb-4196-a25c-7bb7b710953e" )]
-
-[assembly: ThemeInfo(
-	ResourceDictionaryLocation.SourceAssembly, //where theme specific resource dictionaries are located
-	//(used if a resource is not found in the page, 
-	// or application resource dictionaries)
-	ResourceDictionaryLocation.SourceAssembly //where the generic resource dictionary is located
-	//(used if a resource is not found in the page, 
-	// app, or any theme specific resource dictionaries)
-)]
+[assembly: Guid( "104a396a-4a06-4a28-8fd0-566836d79c18" )]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -46,6 +34,3 @@ using MDotNet.Common;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion( "1.0.0.0" )]
 [assembly: AssemblyFileVersion( "1.0.0.0" )]
-
-[assembly: XmlnsDefinition( AppInfo.XamlNamepsace, "MDotNet.WPF" )]
-[assembly: XmlnsDefinition( AppInfo.XamlNamepsace, "MDotNet.WPF.Docking" )]
