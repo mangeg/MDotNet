@@ -1,4 +1,5 @@
 
+*.suo
 *.user
 /_ReSharper.MDotNet
 /bin
