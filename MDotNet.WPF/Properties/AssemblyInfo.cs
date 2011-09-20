@@ -47,5 +47,5 @@ using MDotNet.Common;
 [assembly: AssemblyVersion( "1.0.0.0" )]
 [assembly: AssemblyFileVersion( "1.0.0.0" )]
 
-[assembly: XmlnsDefinition( AppInfo.XamlNamepsace, "MDotNet.WPF" )]
+//[assembly: XmlnsDefinition( AppInfo.XamlNamepsace, "MDotNet.WPF" )]
 [assembly: XmlnsDefinition( AppInfo.XamlNamepsace, "MDotNet.WPF.Docking" )]

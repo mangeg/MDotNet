@@ -16,7 +16,7 @@
                                     <VisualTransition GeneratedDuration="0:0:0.05"/>
                                 </VisualStateGroup.Transitions>
                                 <VisualState x:Name="Normal"/>
-                                <VisualState x:Name="MouseOver">
+                                <VisualState x:Name="MouseOver">                                    
                                     <Storyboard>
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)" Storyboard.TargetName="Border">
                                             <EasingColorKeyFrame KeyTime="0" Value="{StaticResource MouseOverColor}"/>
@@ -65,7 +65,7 @@
                         </VisualStateManager.VisualStateGroups>
                         <Grid Height="Auto">
                             <ContentPresenter Height="Auto" Width="Auto" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}"/>
-                            <Border x:Name="ActiveBorder" BorderBrush="#FF6A95FF" BorderThickness="2" Visibility="Collapsed"/>
+                            <Border x:Name="ActiveBorder" BorderBrush="#777777" BorderThickness="2" Visibility="Collapsed"/>
                         </Grid>
                     </Border>
                 </ControlTemplate>

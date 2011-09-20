@@ -28,15 +28,8 @@ namespace MUtils
 			SettingsManager.SetTarget<MainSettings>( target );
 			SettingsManager.Load<MainSettings>();
 
-			var settings = SettingsManager.Get<MainSettings>();
 			MainWindow = new MainWindow();
-
 			MainWindow.Title = "MUtils";
-			MainWindow.WindowState = settings.WindowState;
-			MainWindow.Width = settings.WindowSize.Width;
-			MainWindow.Height = settings.WindowSize.Height;
-			MainWindow.Left = settings.StartLocation.X;
-			MainWindow.Top = settings.StartLocation.Y;
 			MainWindow.Show();
 		}
 

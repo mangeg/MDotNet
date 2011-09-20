@@ -5,8 +5,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
     xmlns:Options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
     xmlns:mdot="http://www.azeroth.se/MDotNet" 
-    xmlns:AvalonDock="clr-namespace:AvalonDock;assembly=AvalonDock" 
-    mc:Ignorable="d" x:Class="MUtils.MainWindow" d:DesignWidth="600" d:DesignHeight="600">	
+    xmlns:views="clr-namespace:MUtils.View"
+    xmlns:AvalonDock="clr-namespace:AvalonDock;assembly=AvalonDock"
+    xmlns:ViewModelLocator="clr-namespace:MEFedMVVM.ViewModelLocator;assembly=MEFedMVVM.WPF" 
+    mc:Ignorable="d" x:Class="MUtils.MainWindow" d:DesignWidth="800" d:DesignHeight="600"
+    ViewModelLocator:ViewModelLocator.ViewModel="MainVM">	
 
     <Window.Resources>
         <Style TargetType="{x:Type MenuItem}">
@@ -18,67 +21,33 @@
         </Style>    
     </Window.Resources>
     
-    <Grid Background="{StaticResource MainWindowBackgroundGradient}">        
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <Canvas Grid.RowSpan="3" Background="{DynamicResource BackgroundNoiseBrush}"/>
+    <Grid Background="{StaticResource MainWindowBackgroundGradient}"> 
+        <Canvas Background="{DynamicResource BackgroundNoiseBrush}"/>
         
-        <Menu Background="{DynamicResource MenuBackgroundGradient}">
-            <MenuItem Header="File">
-                <MenuItem Header="Exit"/>
-            </MenuItem>
-            <MenuItem Header="Edit">
-                <MenuItem Header="Undo" Command="Undo"/>
-                <MenuItem Header="Redo" Command="Redo"/>
-                <MenuItem Header="Copy" Command="Copy"/>
-                <MenuItem Header="Paste" Command="Paste"/>
-            </MenuItem>
-        </Menu>
+        <DockPanel LastChildFill="True">
         
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="100" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="100" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid Grid.Row="1" Grid.Column="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Button Content="Button 1" Grid.Column="0"/>
-                <Button Content="Button 2" Grid.Column="1"/>
-                <Button Content="Button 3" Grid.Column="2" IsEnabled="False"/>
-                <Button Content="Button 4" Grid.Column="3"/>
-                <Button Content="Button 5" Grid.Column="4" IsEnabled="False"/>                
-            </Grid>
+            <Menu DockPanel.Dock="Top" Background="{DynamicResource MenuBackgroundGradient}">
+                <MenuItem Header="File">
+                    <MenuItem Header="Exit"/>
+                </MenuItem>
+                <MenuItem Header="Edit">
+                    <MenuItem Header="Undo" Command="Undo"/>
+                    <MenuItem Header="Redo" Command="Redo"/>
+                    <MenuItem Header="Copy" Command="Copy"/>
+                    <MenuItem Header="Paste" Command="Paste"/>
+                </MenuItem>
+            </Menu>   
             
-            <TextBox Grid.Row="2" Grid.Column="1" Text="Normal TextBox"/>
-            <TextBox Grid.Row="3" Grid.Column="1" Text="Read only text" IsReadOnly="True"/>
-            <TextBox Grid.Row="4" Grid.Column="1" Text="Disabled TextBox" IsEnabled="False"/>
-            <TextBox Grid.Row="5" Grid.Column="1" Text="Disabled and readonly TextBox" IsEnabled="False" IsReadOnly="True"/>
+            <views:Statusbar DockPanel.Dock="Bottom"/>
+
+            <AvalonDock:DockingManager Background="Transparent" x:Name="DockMngr" Loaded="DockMngr_Loaded">
+                <AvalonDock:ResizingPanel Orientation="Horizontal">
+                    <AvalonDock:DockablePane AvalonDock:ResizingPanel.ResizeWidth="200">
+                    </AvalonDock:DockablePane>
+                    <AvalonDock:DocumentPane/>
+                </AvalonDock:ResizingPanel>
+            </AvalonDock:DockingManager>
             
-        </Grid>
-        
-        <StatusBar Grid.Row="2" Foreground="White" Background="{DynamicResource DarkBackgroundBrush}">
-        	<Grid>
-        		<TextBlock Text="A status bar!"/>
-        	</Grid>
-        </StatusBar>
-        
+        </DockPanel>
     </Grid>
 </Window>

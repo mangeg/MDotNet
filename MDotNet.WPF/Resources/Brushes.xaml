@@ -4,7 +4,7 @@
 
     <SolidColorBrush x:Key="DarkBackgroundBrush" Color="#131D2E" po:Freeze="True"/>
     <SolidColorBrush x:Key="LightBackgroundBrush" Color="#30405D" po:Freeze="True"/>
-    <SolidColorBrush x:Key="ActiveTextNormal" Color="Black" po:Freeze="True"/>
+    <SolidColorBrush x:Key="ActiveTextNormalBrush" Color="Black" po:Freeze="True"/>
     <LinearGradientBrush x:Key="MainWindowBackgroundGradient"
                          EndPoint="0.5,1" StartPoint="0.5,0">
     	<LinearGradientBrush.RelativeTransform>
@@ -48,10 +48,22 @@
             <GradientStop Color="#FF687997" Offset="1"/>
         </GradientStopCollection>
     </LinearGradientBrush>
-
+    
+    
+    <!--States-->
     <Color x:Key="DisabledBackgroundColor">#FF393939</Color>
     <Color x:Key="DisabledBorderColor">#FF7A7A7A</Color>
     <Color x:Key="MouseOverColor">#FF283D41</Color>
     <Color x:Key="PressedColor">#FF346E7A</Color>
+    <Color x:Key="NormalBackgroundColor">#FFFFFFFF</Color>
+    <Color x:Key="NormalBorderColor">#FF000000</Color>
+    
+    <SolidColorBrush x:Key="DisabledBackgroundColorBrush" Color="{StaticResource DisabledBackgroundColor}" po:Freeze="True"/>
+    <SolidColorBrush x:Key="DisabledBorderColorBrush" Color="{StaticResource DisabledBorderColor}" po:Freeze="True"/>
+    <SolidColorBrush x:Key="MouseOverColorBrush" Color="{StaticResource MouseOverColor}" po:Freeze="True"/>
+    <SolidColorBrush x:Key="PressedColorBrush" Color="{StaticResource PressedColor}" po:Freeze="True"/>
+    <SolidColorBrush x:Key="NormalBackgroundColorBrush" Color="{StaticResource NormalBackgroundColor}" po:Freeze="True"/>
+    <SolidColorBrush x:Key="NormalBorderColorBrush" Color="{StaticResource NormalBorderColor}" po:Freeze="True"/>
+    <!--States End-->
 
 </ResourceDictionary>

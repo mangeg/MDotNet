@@ -65,10 +65,18 @@ namespace MDotNet.Settings
 			}
 			var target = _sTargets[ type ];
 			target.Load();
-			if ( !_sObjects.ContainsKey( type ) )
-				_sObjects.Add( type, (T) target.Value );
-
-			_sObjects[ type ] = (T) target.Value;
+			if ( target.Value != null )
+			{
+				if ( !_sObjects.ContainsKey( type ) )
+				{
+					_sObjects.Add( type, (T) target.Value );
+				}
+				else
+				{
+					_sObjects[ type ] = ( T )target.Value;
+				}
+			}
+			
 		}
 		/// <summary>
 		/// Gets the specific settings.

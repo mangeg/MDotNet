@@ -7,7 +7,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/MDotNet.WPF;component/Themes/generic.xaml"/>
                 <ResourceDictionary Source="Themes/generic.xaml"/>
-                <!--<ResourceDictionary Source="/AvalonDock.Themes;component/themes/Dev2010.xaml"/>-->
+                <ResourceDictionary Source="/AvalonDock.Themes;component/themes/Dev2010.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
