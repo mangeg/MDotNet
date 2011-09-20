@@ -1,0 +1,14 @@
+﻿<Application x:Class="MUtils.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/MDotNet.WPF;component/Themes/generic.xaml"/>
+                <ResourceDictionary Source="Themes/generic.xaml"/>
+                <!--<ResourceDictionary Source="/AvalonDock.Themes;component/themes/Dev2010.xaml"/>-->
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

@@ -6,16 +6,19 @@
     <SolidColorBrush x:Key="LightBackgroundBrush" Color="#30405D" po:Freeze="True"/>
     <SolidColorBrush x:Key="ActiveTextNormal" Color="Black" po:Freeze="True"/>
     <LinearGradientBrush x:Key="MainWindowBackgroundGradient"
-                         StartPoint="0,0"
-                         EndPoint="0,1"
-                         po:Freeze="True">
-        <GradientStopCollection>
-            <GradientStop Color="#131D2E" Offset="0"/>
-            <GradientStop Color="#2A5D65" Offset="0.2"/>
-            <GradientStop Color="#43848D" Offset="0.5"/>
-            <GradientStop Color="#2A5D65" Offset="0.8"/>
-            <GradientStop Color="#131D2E" Offset="1"/>
-        </GradientStopCollection>
+                         EndPoint="0.5,1" StartPoint="0.5,0">
+    	<LinearGradientBrush.RelativeTransform>
+    		<TransformGroup>
+    			<ScaleTransform CenterY="0.5" CenterX="0.5"/>
+    			<SkewTransform CenterY="0.5" CenterX="0.5"/>
+    			<RotateTransform CenterY="0.5" CenterX="0.5"/>
+    			<TranslateTransform/>
+    		</TransformGroup>
+    	</LinearGradientBrush.RelativeTransform>
+    	<GradientStop Color="#FF131D2E" Offset="0"/>
+    	<GradientStop Color="#FF131D2E" Offset="1"/>
+    	<GradientStop Color="#FF133A41" Offset="0.392"/>
+    	<GradientStop Color="#FF17323D" Offset="0.164"/>
     </LinearGradientBrush>
     <DrawingBrush x:Key="BackgroundNoiseBrush" 
                   TileMode="Tile" 
@@ -42,8 +45,13 @@
         <GradientStopCollection>
             <GradientStop Color="#FFCAD3E2" Offset="0"/>
             <GradientStop Color="#FFC2CCDB" Offset="0.3"/>
-            <GradientStop Color="#FFADB9CD" Offset="1"/>
+            <GradientStop Color="#FF687997" Offset="1"/>
         </GradientStopCollection>
     </LinearGradientBrush>
+
+    <Color x:Key="DisabledBackgroundColor">#FF393939</Color>
+    <Color x:Key="DisabledBorderColor">#FF7A7A7A</Color>
+    <Color x:Key="MouseOverColor">#FF283D41</Color>
+    <Color x:Key="PressedColor">#FF346E7A</Color>
 
 </ResourceDictionary>
