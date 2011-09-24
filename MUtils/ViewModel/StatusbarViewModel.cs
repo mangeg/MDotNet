@@ -38,11 +38,6 @@ namespace MUtils.ViewModel
 			_mediator = mediator;
 
 			mediator.Register( this );
-
-			mediator.NotifyColleagues( MediatorMessages.StatusMessage, "First Message!" );
-			mediator.NotifyColleagues( MediatorMessages.StatusMessage, "2nd Message!" );
-			mediator.NotifyColleagues( MediatorMessages.StatusMessage, "3rd Message!" );
-			mediator.NotifyColleagues( MediatorMessages.StatusMessage, "4th Message!" );
 		}
 
 		[MediatorMessageSink( MediatorMessages.StatusMessage, ParameterType = typeof( String ) )]

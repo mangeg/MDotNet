@@ -13,7 +13,7 @@ namespace MDotNet.Settings.Targets
 	/// <typeparam name="T">The type this target loads and saves.</typeparam>
 	public class XmlTarget<T> : ITarget where T : class, new()
 	{
-		private readonly XmlSerializer _xmls = new XmlSerializer( typeof( T ) );
+		private readonly XmlSerializer _xmls;// = new XmlSerializer( typeof( T ) );
 		private readonly XmlWriterSettings _xmlwSettings;
 
 		/// <summary>
@@ -46,6 +46,7 @@ namespace MDotNet.Settings.Targets
 		/// </summary>
 		public XmlTarget()
 		{
+			_xmls = new XmlSerializer( typeof( T ) );
 			FailSilent = true;
 			_xmlwSettings = new XmlWriterSettings {
 				Indent = true,

@@ -49,3 +49,4 @@ using MDotNet.Common;
 
 //[assembly: XmlnsDefinition( AppInfo.XamlNamepsace, "MDotNet.WPF" )]
 [assembly: XmlnsDefinition( AppInfo.XamlNamepsace, "MDotNet.WPF.Docking" )]
+[assembly: XmlnsDefinition( AppInfo.XamlNamepsace, "MDotNet.WPF.MVVM")]
