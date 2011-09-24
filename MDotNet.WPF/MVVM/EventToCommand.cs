@@ -181,10 +181,10 @@ namespace MDotNet.WPF.MVVM
 		}
 
 #if SILVERLIGHT
-        private Control GetAssociatedObject()
-        {
-            return AssociatedObject as Control;
-        }
+		private Control GetAssociatedObject()
+		{
+			return AssociatedObject as Control;
+		}
 #else
 		/// <summary>
 		/// This method is here for compatibility

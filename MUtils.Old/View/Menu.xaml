@@ -1,0 +1,31 @@
+﻿<UserControl x:Class="MUtils.View.Menu"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mefed="http:\\www.codeplex.com\MEFedMVVM"
+             mc:Ignorable="d"
+             mefed:ViewModelLocator.SharedViewModel="MenuVM">
+    
+    <UserControl.Resources>
+        <Style TargetType="{x:Type MenuItem}">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="White"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    
+    <Menu Background="{DynamicResource MenuBackgroundGradient}">
+        <MenuItem Header="File">
+            <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
+        </MenuItem>
+        <MenuItem Header="Edit">
+            <MenuItem Header="Undo" Command="Undo"/>
+            <MenuItem Header="Redo" Command="Redo"/>
+            <MenuItem Header="Copy" Command="Copy"/>
+            <MenuItem Header="Paste" Command="Paste"/>
+        </MenuItem>
+    </Menu>
+</UserControl>

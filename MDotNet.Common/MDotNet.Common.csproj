@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppInfo.cs" />
+    <Compile Include="IoC\IoC.cs" />
+    <Compile Include="IoC\IoCExtensions.cs" />
+    <Compile Include="IoC\IServiceLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

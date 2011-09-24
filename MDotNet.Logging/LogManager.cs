@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using NLog;
 using NLog.Config;
@@ -7,95 +9,143 @@ using NLog.Targets;
 namespace MDotNet.Logging
 {
 	/// <summary>
-	/// LogManager for NLog
+	/// LogManager for ILog
 	/// </summary>
 	public static class LogManager
 	{
-		private static LogFactory _factory;
-		private static LoggingConfiguration _config;
+		private static readonly ILog _sNullLogger = new NullLog();
+		private static Func<Type, ILog> _sLogLocator = logLocator => _sNullLogger;
 
-		static LogManager()
+		/// <summary>
+		/// Initializes the LogManager wit the specified log locator.
+		/// </summary>
+		/// <param name="logLocator">The log locator.</param>
+		public static void Initialize(Func<Type, ILog> logLocator)
 		{
-			_config = new LoggingConfiguration();
-
-			var consoleTarget = GetDefaultColoredConsoleTarget();
-			_config.AddTarget( "ColoredConsole", consoleTarget );
-
-			var logRule = new LoggingRule();
-			logRule.LoggerNamePattern = "*";
-			logRule.Targets.Add( consoleTarget );
-			logRule.EnableLoggingForLevel( LogLevel.Trace );
-			logRule.EnableLoggingForLevel( LogLevel.Info );
-			logRule.EnableLoggingForLevel( LogLevel.Debug );
-			logRule.EnableLoggingForLevel( LogLevel.Warn );
-			logRule.EnableLoggingForLevel( LogLevel.Error );
-			logRule.EnableLoggingForLevel( LogLevel.Fatal );
-
-			_config.LoggingRules.Add( logRule );
+			_sLogLocator = logLocator;
 		}
-
-		private static string GetNLogConfigFilePath()
+		
+		/// <summary>
+		/// Gets the log.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns></returns>
+		public static ILog GetLog(Type type)
 		{
-			Assembly thisAssembly = Assembly.GetEntryAssembly();
+			return _sLogLocator( type );
+		}
+		/// <summary>
+		/// Gets the log.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static ILog GetLog<T>()
+		{
+			return GetLog( typeof (T) );
+		}
+		/// <summary>
+		/// Gets the log.
+		/// </summary>
+		/// <returns></returns>
+		public static ILog GetLog()
+		{
+#if SILVERLIGHT
+			var frame = new StackFrame(1);
+#else
+			var frame = new StackFrame( 1, false );
+#endif
+			return GetLog(frame.GetMethod().DeclaringType);
+		}
+	}
 
-			var thisAssemblyPath = Path.GetDirectoryName( thisAssembly.Location );
-			var assmConfig = Path.ChangeExtension( thisAssembly.Location, ".nlog" );
-
-			if ( File.Exists( assmConfig ) )
-				return Path.ChangeExtension( thisAssembly.Location, ".nlog" );
-
-			return Path.Combine( thisAssemblyPath, "Default.nlog" );
+	internal class NullLog : ILog
+	{
+		/// <summary>
+		/// Log information.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Info(string message)
+		{
+		}
+		/// <summary>
+		/// Log warning.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Warning(string message)
+		{
+		}
+		/// <summary>
+		/// Log trace.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Trace(string message)
+		{
+		}
+		/// <summary>
+		/// Log fatal.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Fatal(string message)
+		{
+		}
+		/// <summary>
+		/// Log error.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		public void Error(string message)
+		{
+		}
+		/// <summary>
+		/// Log error.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		public void Error(Exception exception)
+		{
+		}
+		/// <summary>
+		/// Log information.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		/// <param name="exception">The exception.</param>
+		public void Info(string message, Exception exception)
+		{
+		}
+		/// <summary>
+		/// Log warning.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		/// /// <param name="exception">The exception.</param>
+		public void Warning(string message, Exception exception)
+		{
+		}
+		/// <summary>
+		/// Log trace.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		/// /// <param name="exception">The exception.</param>
+		public void Trace(string message, Exception exception)
+		{
+		}
+		/// <summary>
+		/// Log fatal.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		/// /// <param name="exception">The exception.</param>
+		public void Fatal(string message, Exception exception)
+		{
+		}
+		/// <summary>
+		/// Log error.
+		/// </summary>
+		/// <param name="message">The message.</param>
+		/// /// <param name="exception">The exception.</param>
+		public void Error(string message, Exception exception)
+		{
 		}
 
 		/// <summary>
-		/// Gets log factory instance for the colling assembly.
+		/// Shutdowns this instance.
 		/// </summary>
-		/// <returns></returns>
-		public static LogFactory Get()
-		{
-			if ( _factory == null )
-			{
-				var configFile = GetNLogConfigFilePath();
-				if ( File.Exists( configFile ) )
-					_factory = new LogFactory( new XmlLoggingConfiguration( configFile ) );
-				else
-				{
-					_factory = new LogFactory( _config );
-				}
-			}
-
-			return _factory;
-		}
-		/// <summary>
-		/// Gets the default colored console target.
-		/// </summary>
-		/// <returns></returns>
-		public static ColoredConsoleTarget GetDefaultColoredConsoleTarget()
-		{
-			var consoleTarget = new ColoredConsoleTarget();
-
-			consoleTarget.Header = "${date:format=yyyy-MM-dd - hh\\:mm\\:ss} - Logging Started";
-			consoleTarget.Layout = "${date:format=HH\\:MM\\:ss} ${logger} ${message}${onexception:inner=${newline}${exception:format=tostring}}";
-			/*consoleTarget.Layout += "${onexception:inner=${newline}${pad:padding=50:padCharacter=*:inner=}${newline}" +
-				"${pad:padding=10:inner=Method > :padCharacter= }" + 
-				"${exception:format=Method}${newline}" + 
-				"${pad:padding=10:inner=Type > :padCharacter= }" + 
-				"${exception:format=Type}${newline}" + 
-				"${pad:padding=10: inner=Message > :padCharacter= }" + 
-				"${exception:format=Message }${newline}" + 
-				"${pad:padding=10:inner=Stack >:padCharacter= }" +
-				"${exception:separator= ssss :format=StackTrace}${newline}" + 
-				"Inner Exception${newline}" + 
-				"${pad:padding=10:inner=Type > :padCharacter= }" + 
-				"${exception:format=:innerFormat=Type,:maxInnerExceptionLevel=5:innerExceptionSeparator=}${newline}" + 
-				"${pad:padding=10:inner=Message > :padCharacter= }" + 
-				"${exception:format=:innerFormat=Message:separator=->,:maxInnerExceptionLevel=5:innerExceptionSeparator=}${newline}" + 
-				"${pad:padding=10:inner=Method > :padCharacter= }" + 
-				"${exception:format=:innerFormat=Method,:maxInnerExceptionLevel=5:innerExceptionSeparator=}${newline}" +
-				"${pad:padding=50:padCharacter=*:inner=}}";*/
-			consoleTarget.Footer = "${date:format=yyyy-MM-dd - hh\\:mm\\:ss} - Logging Ended";
-
-			return consoleTarget;
-		}
+		public void Shutdown(){}
 	}
 }
