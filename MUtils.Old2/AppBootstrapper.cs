@@ -69,7 +69,6 @@
 		protected override void OnUnhandledException( object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e )
 		{
 			base.OnUnhandledException( sender, e );
-			MDotNet.Logging.LogManager.GetLog().Error( e.Exception );
 		}
 
 		protected override void OnExit( object sender, EventArgs e )

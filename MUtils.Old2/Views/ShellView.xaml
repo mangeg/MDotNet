@@ -1,0 +1,25 @@
+﻿<Window x:Class="MUtils.Views.ShellView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <Grid Background="{StaticResource MainWindowBackgroundGradient}">
+        <Canvas Background="{DynamicResource BackgroundNoiseBrush}"/>
+
+        <DockPanel LastChildFill="True">
+            <ContentControl x:Name="Menu" DockPanel.Dock="Top"/>
+            <ContentControl x:Name="Statusbar" DockPanel.Dock="Bottom"/>
+            
+            <Button Content="Button" Margin="100"/>
+        </DockPanel>
+
+    </Grid>
+
+</Window>
+

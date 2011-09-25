@@ -1,39 +1,47 @@
-﻿using System;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using NLog;
-using NLog.Config;
-using NLog.Targets;
-
-namespace MDotNet.Logging
+﻿namespace MDotNet.Logging
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Diagnostics;
+
 	/// <summary>
 	/// LogManager for ILog
 	/// </summary>
 	public static class LogManager
 	{
-		private static readonly ILog _sNullLogger = new NullLog();
-		private static Func<Type, ILog> _sLogLocator = logLocator => _sNullLogger;
+		private static ILogLocator _sDefaultLocator = new NullLocator();
+		private static Dictionary<String, ILogLocator> _sLocators = new Dictionary<string, ILogLocator>();
 
 		/// <summary>
-		/// Initializes the LogManager wit the specified log locator.
+		/// Adds the keyed locator.
 		/// </summary>
-		/// <param name="logLocator">The log locator.</param>
-		public static void Initialize(Func<Type, ILog> logLocator)
+		/// <param name="key">The key.</param>
+		/// <param name="locator">The locator.</param>
+		public static void AddKeyedLocator( String key, ILogLocator locator )
 		{
-			_sLogLocator = logLocator;
+			_sLocators[ key ] = locator;
 		}
-		
+
+		/// <summary>
+		/// Removes the keyed locator.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		public static void RemoveKeyedLocator( String key )
+		{
+			if ( _sLocators.ContainsKey( key ) )
+				_sLocators.Remove( key );
+		}
+
 		/// <summary>
 		/// Gets the log.
 		/// </summary>
 		/// <param name="type">The type.</param>
 		/// <returns></returns>
-		public static ILog GetLog(Type type)
+		public static ILog GetLog( Type type )
 		{
-			return _sLogLocator( type );
+			return _sDefaultLocator.TypedLocator( type );
 		}
+
 		/// <summary>
 		/// Gets the log.
 		/// </summary>
@@ -41,8 +49,9 @@ namespace MDotNet.Logging
 		/// <returns></returns>
 		public static ILog GetLog<T>()
 		{
-			return GetLog( typeof (T) );
+			return GetLog( typeof( T ) );
 		}
+
 		/// <summary>
 		/// Gets the log.
 		/// </summary>
@@ -54,114 +63,78 @@ namespace MDotNet.Logging
 #else
 			var frame = new StackFrame( 1, false );
 #endif
-			return GetLog(frame.GetMethod().DeclaringType);
-		}
-	}
-
-	internal class NullLog : ILog
-	{
-		/// <summary>
-		/// Log information.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public void Info(string message)
-		{
-		}
-		/// <summary>
-		/// Log information.
-		/// </summary>
-		/// <param name="format">The format.</param>
-		/// <param name="args">The args.</param>
-		public void Info(string format, params object[] args)
-		{
-		}
-		/// <summary>
-		/// Log warning.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public void Warning(string message)
-		{
-		}
-		/// <summary>
-		/// Log warning.
-		/// </summary>
-		/// <param name="format">The format.</param>
-		/// <param name="args">The args.</param>
-		public void Warning(string format, params object[] args)
-		{
-		}
-		/// <summary>
-		/// Log trace.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public void Trace(string message)
-		{
-		}
-		/// <summary>
-		/// Log fatal.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public void Fatal(string message)
-		{
-		}
-		/// <summary>
-		/// Log error.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		public void Error(string message)
-		{
-		}
-		/// <summary>
-		/// Log error.
-		/// </summary>
-		/// <param name="exception">The exception.</param>
-		public void Error(Exception exception)
-		{
-		}
-		/// <summary>
-		/// Log information.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		/// <param name="exception">The exception.</param>
-		public void Info(string message, Exception exception)
-		{
-		}
-		/// <summary>
-		/// Log warning.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		/// /// <param name="exception">The exception.</param>
-		public void Warning(string message, Exception exception)
-		{
-		}
-		/// <summary>
-		/// Log trace.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		/// /// <param name="exception">The exception.</param>
-		public void Trace(string message, Exception exception)
-		{
-		}
-		/// <summary>
-		/// Log fatal.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		/// /// <param name="exception">The exception.</param>
-		public void Fatal(string message, Exception exception)
-		{
-		}
-		/// <summary>
-		/// Log error.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		/// /// <param name="exception">The exception.</param>
-		public void Error(string message, Exception exception)
-		{
+			return GetLog( frame.GetMethod().DeclaringType );
 		}
 
 		/// <summary>
-		/// Shutdowns this instance.
+		/// Gets a named log.
 		/// </summary>
-		public void Shutdown(){}
+		/// <param name="name">The name.</param>
+		/// <returns>The named <see cref="ILog"/></returns>
+		public static ILog GetNamedLog( String name )
+		{
+			return _sDefaultLocator.NamedLocator( name );
+		}
+
+		/// <summary>
+		/// Gets the log for a specific key.
+		/// If the key is not registered the default will be returned.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="key">The key.</param>
+		/// <returns>The typed <see cref="ILog"/> for the specified key</returns>
+		public static ILog GetLog( Type type, String key )
+		{
+			ILogLocator locator;
+			if ( _sLocators.TryGetValue( key, out locator ) )
+			{
+				return locator.TypedLocator( type );
+			}
+			return _sDefaultLocator.TypedLocator( type );
+		}
+
+		/// <summary>
+		/// Gets the log for a specific key.
+		/// If the key is not registered the default will be returned.
+		/// </summary>
+		/// <typeparam name="T">The type to get the log for</typeparam>
+		/// <param name="key">The key.</param>
+		/// <returns>The typed <see cref="ILog"/> for the specified key</returns>
+		public static ILog GetLog<T>( String key )
+		{
+			return GetLog( typeof( T ), key );
+		}
+
+		/// <summary>
+		/// Gets the log for a specific key.
+		/// If the key is not registered the default will be returned.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <returns>The default type <see cref="ILog"/> for the specified key</returns>
+		public static ILog GetLog( String key )
+		{
+#if SILVERLIGHT
+			var frame = new StackFrame(1);
+#else
+			var frame = new StackFrame( 1, false );
+#endif
+			return GetLog( frame.GetMethod().DeclaringType, key );
+		}
+
+		/// <summary>
+		/// Gets the named log for a specific key.
+		/// </summary>
+		/// <param name="name">The name.</param>
+		/// <param name="key">The key.</param>
+		/// <returns>The named <see cref="ILog"/> for the specified key.</returns>
+		public static ILog GetNamedLog( String name, String key )
+		{
+			ILogLocator locator;
+			if ( _sLocators.TryGetValue( key, out locator ) )
+			{
+				return locator.NamedLocator( name );
+			}
+			return _sDefaultLocator.NamedLocator( name );
+		}
 	}
 }

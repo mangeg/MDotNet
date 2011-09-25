@@ -7,7 +7,7 @@ namespace MDotNet.Common.IoC
 {
 	public interface IServiceLocator
 	{
-		object GetInstance(Type serviceType, String key );
-		IEnumerable<object> GetAllInstances(Type serviceType);
+		object GetInstance( Type serviceType, String key );
+		IEnumerable<object> GetAllInstances( Type serviceType );
 	}
 }

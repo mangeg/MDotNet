@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{BE3FF191-E1DD-489C-84E4-757AF62C2675}</ProjectGuid>
+    <ProjectGuid>{BD84BF78-E1DC-46F7-ABD7-32F1D531586E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MDotNet.WPF.MVVM</RootNamespace>
-    <AssemblyName>MDotNet.WPF.MVVM</AssemblyName>
+    <RootNamespace>MDotNet.Logging.Wrappers.NLog</RootNamespace>
+    <AssemblyName>MDotNet.Logging.Wrappers.NLog</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\bin\Debug\MDotNet.Logging.Wrappers.NLog.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,8 +30,13 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <RegisterForComInterop>false</RegisterForComInterop>
+    <DocumentationFile>..\bin\Release\MDotNet.Logging.Wrappers.NLog.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.2.0.0.2000\lib\net40\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -40,23 +46,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationModel\Bootstrapper.cs" />
+    <Compile Include="NLogLocator.cs" />
+    <Compile Include="NLogWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewLocator.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MDotNet.Common\MDotNet.Common.csproj">
-      <Project>{3759C2E4-1872-4C4D-8B7B-4406904BB36B}</Project>
-      <Name>MDotNet.Common</Name>
-      <Private>False</Private>
-    </ProjectReference>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\MDotNet.Logging\MDotNet.Logging.csproj">
       <Project>{644EE405-7EDA-47B3-A939-14DDCC14FCED}</Project>
       <Name>MDotNet.Logging</Name>
       <Private>False</Private>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

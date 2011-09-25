@@ -18,7 +18,6 @@
 		/// <param name="format">A formatted message.</param><param name="args">Parameters to be injected into the formatted message.</param>
 		public void Info(string format, params object[] args)
 		{
-			_log.Info( format, args );
 		}
 
 		/// <summary>
@@ -27,7 +26,6 @@
 		/// <param name="format">A formatted message.</param><param name="args">Parameters to be injected into the formatted message.</param>
 		public void Warn(string format, params object[] args)
 		{
-			_log.Warning( format, args );
 		}
 
 		/// <summary>
@@ -36,7 +34,6 @@
 		/// <param name="exception">The exception.</param>
 		public void Error(Exception exception)
 		{
-			_log.Error( exception );
 		}
 	}
 }

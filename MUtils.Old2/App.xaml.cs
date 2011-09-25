@@ -10,7 +10,6 @@
 	{
 		public App()
 		{
-			MDotNet.Logging.LogManager.Initialize( NLogManager.DefaultNLogLocator );
 			Caliburn.Micro.LogManager.GetLog = ( type ) =>
 				new Logging.CaliburnLogWrapper( MDotNet.Logging.LogManager.GetLog( type ) );
 		}
