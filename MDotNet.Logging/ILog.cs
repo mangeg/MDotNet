@@ -13,10 +13,22 @@ namespace MDotNet.Logging
 		/// <param name="message">The message.</param>
 		void Info(String message);
 		/// <summary>
+		/// Log information.
+		/// </summary>
+		/// <param name="format">The format.</param>
+		/// <param name="args">The args.</param>
+		void Info(String format, params object[] args);
+		/// <summary>
 		/// Log warning.
 		/// </summary>
 		/// <param name="message">The message.</param>
 		void Warning(String message);
+		/// <summary>
+		/// Log warning.
+		/// </summary>
+		/// <param name="format">The format.</param>
+		/// <param name="args">The args.</param>
+		void Warning( String format, params object[] args );
 		/// <summary>
 		/// Log trace.
 		/// </summary>
@@ -37,37 +49,6 @@ namespace MDotNet.Logging
 		/// </summary>
 		/// <param name="exception">The exception.</param>
 		void Error(Exception exception);
-
-		/// <summary>
-		/// Log information.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		/// <param name="exception">The exception.</param>
-		void Info(String message, Exception exception);
-		/// <summary>
-		/// Log warning.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		/// /// <param name="exception">The exception.</param>
-		void Warning( String message, Exception exception );
-		/// <summary>
-		/// Log trace.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		/// /// <param name="exception">The exception.</param>
-		void Trace( String message, Exception exception );
-		/// <summary>
-		/// Log fatal.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		/// /// <param name="exception">The exception.</param>
-		void Fatal( String message, Exception exception );
-		/// <summary>
-		/// Log error.
-		/// </summary>
-		/// <param name="message">The message.</param>
-		/// /// <param name="exception">The exception.</param>
-		void Error( String message, Exception exception );
 
 		/// <summary>
 		/// Shutdowns this instance.

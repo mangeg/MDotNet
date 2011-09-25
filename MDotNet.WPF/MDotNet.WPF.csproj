@@ -52,7 +52,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationModel\Bootstrapper.cs" />
-    <Compile Include="Docking\DockManager.cs" />
     <Compile Include="Extensions\DependencyObjectExtensions.cs" />
     <Compile Include="MVVM\DelegateCommand.cs" />
     <Compile Include="MVVM\EventToCommand.cs" />
@@ -66,10 +65,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Docking\Resources\DockManagerStyle.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Resources\Button.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

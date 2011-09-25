@@ -2,7 +2,6 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/MDotNet.WPF;component/Docking/Resources/DockManagerStyle.xaml"/>
         <ResourceDictionary Source="/MDotNet.WPF;component/Resources/Brushes.xaml"/>
         <ResourceDictionary Source="/MDotNet.WPF;component/Resources/Button.xaml"/>
         <ResourceDictionary Source="/MDotNet.WPF;component/Resources/TextBox.xaml"/>

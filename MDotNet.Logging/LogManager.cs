@@ -68,10 +68,26 @@ namespace MDotNet.Logging
 		{
 		}
 		/// <summary>
+		/// Log information.
+		/// </summary>
+		/// <param name="format">The format.</param>
+		/// <param name="args">The args.</param>
+		public void Info(string format, params object[] args)
+		{
+		}
+		/// <summary>
 		/// Log warning.
 		/// </summary>
 		/// <param name="message">The message.</param>
 		public void Warning(string message)
+		{
+		}
+		/// <summary>
+		/// Log warning.
+		/// </summary>
+		/// <param name="format">The format.</param>
+		/// <param name="args">The args.</param>
+		public void Warning(string format, params object[] args)
 		{
 		}
 		/// <summary>
