@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-
-namespace MDotNet.Extensions
+﻿namespace MDotNet.Extensions
 {
+	using System;
+	using System.Globalization;
+
 	/// <summary>
 	/// Extensions for the String class.
 	/// </summary>
@@ -17,10 +14,8 @@ namespace MDotNet.Extensions
 		/// <param name="fmt">The format.</param>
 		/// <param name="args">The args.</param>
 		/// <returns>The formatted string.</returns>
-		public static String FormatWidth( this String fmt, params object[] args )
-		{
-			return String.Format( fmt, args );
-		}
+		public static String FormatWidth( this String fmt, params object[] args ) { return String.Format( fmt, args ); }
+
 		/// <summary>
 		/// Capitalizes the specified string.
 		/// </summary>
@@ -43,14 +38,12 @@ namespace MDotNet.Extensions
 
 			return s;
 		}
+
 		/// <summary>
 		/// Titles case the string.
 		/// </summary>
 		/// <param name="s">The string.</param>
 		/// <returns>A title cased string.</returns>
-		public static String TitleCase( this String s )
-		{
-			return CultureInfo.InvariantCulture.TextInfo.ToTitleCase( s );
-		}
+		public static String TitleCase( this String s ) { return CultureInfo.InvariantCulture.TextInfo.ToTitleCase( s ); }
 	}
 }

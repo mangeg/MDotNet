@@ -1,22 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using MEFedMVVM.ViewModelLocator;
-using MUtils.Service.Contracts;
-using MUtils.ViewModel;
-
-namespace MUtils.Service.DesignTime
+﻿namespace MUtils.Service.DesignTime
 {
+	using System.Collections.ObjectModel;
+	using System.ComponentModel.Composition;
+	using Contracts;
+	using MEFedMVVM.ViewModelLocator;
+	using ViewModel;
+
 	[PartCreationPolicy( CreationPolicy.Shared )]
 	[ExportService( ServiceType.DesignTime, typeof( ILayoutContentService ) )]
 	public class LayoutContentDesignTime : ILayoutContentService
 	{
+		private ObservableCollection<IAvalonDockViewModel> _documents;
 		private AvalonDockHost _host;
 		private ObservableCollection<IAvalonDockViewModel> _panes;
-		private ObservableCollection<IAvalonDockViewModel> _documents;
+
+		public LayoutContentDesignTime()
+		{
+			_panes = new ObservableCollection<IAvalonDockViewModel>();
+			_documents = new ObservableCollection<IAvalonDockViewModel>();
+		}
+
+		#region ILayoutContentService Members
 
 		public AvalonDockHost Host
 		{
@@ -43,17 +47,13 @@ namespace MUtils.Service.DesignTime
 			get { return null; }
 		}
 
-		public LayoutContentDesignTime()
-		{
-			_panes = new ObservableCollection<IAvalonDockViewModel>();
-			_documents = new ObservableCollection<IAvalonDockViewModel>();
-		}
-
 		public void Initialize( AvalonDockHost host )
 		{
 			_host = host;
 
 			new PropertyPaneViewModel( this );
 		}
+
+		#endregion
 	}
 }

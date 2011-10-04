@@ -7,16 +7,12 @@
 	using System.ComponentModel.Composition.Primitives;
 	using System.Linq;
 	using Caliburn.Micro;
-	using MDotNet.Logging;
 
 	public class AppBootstrapper : Bootstrapper<IShell>
 	{
-		CompositionContainer container;
+		private CompositionContainer container;
 
-		public AppBootstrapper()
-		{
-			
-		}
+		public AppBootstrapper() { }
 
 		/// <summary>
 		/// By default, we are configured to use MEF
@@ -50,15 +46,9 @@
 			throw new Exception( string.Format( "Could not locate any instances of contract {0}.", contract ) );
 		}
 
-		protected override IEnumerable<object> GetAllInstances( Type serviceType )
-		{
-			return container.GetExportedValues<object>( AttributedModelServices.GetContractName( serviceType ) );
-		}
+		protected override IEnumerable<object> GetAllInstances( Type serviceType ) { return container.GetExportedValues<object>( AttributedModelServices.GetContractName( serviceType ) ); }
 
-		protected override void BuildUp( object instance )
-		{
-			container.SatisfyImportsOnce( instance );
-		}
+		protected override void BuildUp( object instance ) { container.SatisfyImportsOnce( instance ); }
 
 		protected override void OnStartup( object sender, System.Windows.StartupEventArgs e )
 		{
@@ -66,10 +56,8 @@
 			MDotNet.Logging.LogManager.GetLog();
 		}
 
-		protected override void OnUnhandledException( object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e )
-		{
-			base.OnUnhandledException( sender, e );
-		}
+		protected override void OnUnhandledException( object sender,
+		                                              System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e ) { base.OnUnhandledException( sender, e ); }
 
 		protected override void OnExit( object sender, EventArgs e )
 		{
@@ -78,4 +66,3 @@
 		}
 	}
 }
-

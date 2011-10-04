@@ -14,10 +14,9 @@ namespace MDotNet.Logging.Wrappers.NLog
 		/// Initializes a new instance of the <see cref="NLogWrapper"/> class.
 		/// </summary>
 		/// <param name="log">The log.</param>
-		public NLogWrapper( Logger log )
-		{
-			_log = log;
-		}
+		public NLogWrapper( Logger log ) { _log = log; }
+
+		#region ILog Members
 
 		/// <summary>
 		/// Log a information message.
@@ -95,12 +94,17 @@ namespace MDotNet.Logging.Wrappers.NLog
 		}
 
 		/// <summary>
+		/// Log specified exception as an error.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		public void Error( Exception exception ) { _log.Error( exception ); }
+
+		/// <summary>
 		/// Shutdowns this instance.
 		/// </summary>
-		public void Shutdown()
-		{
-			_log.Factory.Configuration = null;
-		}
+		public void Shutdown() { _log.Factory.Configuration = null; }
+
+		#endregion
 
 		private static bool IsException( params object[] args )
 		{

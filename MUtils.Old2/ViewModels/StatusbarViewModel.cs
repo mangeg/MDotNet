@@ -1,19 +1,20 @@
-﻿
-
-namespace MUtils.ViewModels
+﻿namespace MUtils.ViewModels
 {
 	using System;
 	using System.Collections.Generic;
 	using System.Collections.ObjectModel;
 	using System.ComponentModel.Composition;
-	using MUtils.Model;
 	using Caliburn.Micro;
+	using Model;
 
-	[Export(typeof(StatusbarViewModel))]
+	[Export( typeof( StatusbarViewModel ) )]
 	public class StatusbarViewModel : PropertyChangedBase
 	{
 		private String _lastString;
 		private ObservableCollection<StatusMessage> _messages = new ObservableCollection<StatusMessage>();
+
+		[ImportingConstructor]
+		public StatusbarViewModel() { }
 
 		public String LastMessage
 		{
@@ -25,14 +26,10 @@ namespace MUtils.ViewModels
 				NotifyOfPropertyChange( () => LastMessage );
 			}
 		}
+
 		public IList<StatusMessage> AllMessages
 		{
 			get { return _messages; }
-		}
-
-		[ImportingConstructor]
-		public StatusbarViewModel(  )
-		{
 		}
 
 		/*

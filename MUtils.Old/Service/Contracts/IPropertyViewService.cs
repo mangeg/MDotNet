@@ -1,24 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Linq;
-using System.Text;
-using MEFedMVVM.Common;
-using MEFedMVVM.ViewModelLocator;
-
-namespace MUtils.Service.Contracts
+﻿namespace MUtils.Service.Contracts
 {
+	using System.ComponentModel.Composition;
+	using MEFedMVVM.ViewModelLocator;
+
 	public interface IPropertyViewService
 	{
 	}
 
 	[PartCreationPolicy( CreationPolicy.Shared )]
 	[ExportService( ServiceType.Both, typeof( IPropertyViewService ) )]
-	class PropertyViewService : IPropertyViewService
+	internal class PropertyViewService : IPropertyViewService
 	{
-		public PropertyViewService()
-		{
-			
-		}
+		public PropertyViewService() { }
 	}
 }

@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Windows;
-
-namespace MUtils.Service.Contracts
+﻿namespace MUtils.Service.Contracts
 {
+	using System.Collections.ObjectModel;
+
 	public interface ILayoutContentService
 	{
 		AvalonDockHost Host { get; }

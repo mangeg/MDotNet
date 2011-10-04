@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using AvalonDock;
-
-namespace MUtils
+﻿namespace MUtils
 {
+	using System;
+	using System.Collections;
+	using System.Collections.Generic;
+	using System.Collections.Specialized;
+	using System.ComponentModel;
+	using System.Linq;
+	using System.Windows;
+	using System.Windows.Controls;
+	using System.Windows.Data;
+	using AvalonDock;
+
 	public interface IAvalonDockViewModel
 	{
 		FrameworkElement View { get; }
@@ -26,65 +19,85 @@ namespace MUtils
 
 	public sealed class DocumentClosingEventArgs : EventArgs
 	{
-		public IAvalonDockViewModel Document { get; private set; }
-		public bool Cancel { get; set; }
-
 		internal DocumentClosingEventArgs( IAvalonDockViewModel document )
 		{
 			Document = document;
 			Cancel = false;
 		}
+
+		public IAvalonDockViewModel Document { get; private set; }
+		public bool Cancel { get; set; }
 	}
 
 	/// <summary>
-	/// Interaction logic for AvalonDockMVVM.xaml
+	///   Interaction logic for AvalonDockMVVM.xaml
 	/// </summary>
 	public partial class AvalonDockHost : UserControl
 	{
-		private Dictionary<IAvalonDockViewModel, ManagedContent> _contents = new Dictionary<IAvalonDockViewModel, ManagedContent>();
-
 		public static readonly DependencyProperty PanesProperty =
 			DependencyProperty.Register( "Panes", typeof( IList<IAvalonDockViewModel> ), typeof( AvalonDockHost ),
-			new FrameworkPropertyMetadata( DockableContents_PropertyChanged ) );
+			                             new FrameworkPropertyMetadata( DockableContents_PropertyChanged ) );
+
 		public static readonly DependencyProperty DocumentsProperty =
 			DependencyProperty.Register( "Documents", typeof( IList<IAvalonDockViewModel> ), typeof( AvalonDockHost ),
-			new FrameworkPropertyMetadata( Documents_PropertyChanged ) );
+			                             new FrameworkPropertyMetadata( Documents_PropertyChanged ) );
+
 		public static readonly DependencyProperty ActivePaneProperty =
 			DependencyProperty.Register( "ActivePane", typeof( IAvalonDockViewModel ), typeof( AvalonDockHost ),
-			new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
+			                             new FrameworkPropertyMetadata( null,
+			                                                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
+
 		public static readonly DependencyProperty ActiveDocumentProperty =
 			DependencyProperty.Register( "ActiveDocument", typeof( IAvalonDockViewModel ), typeof( AvalonDockHost ),
-			new FrameworkPropertyMetadata( null, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
+			                             new FrameworkPropertyMetadata( null,
+			                                                            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
 
 		public static readonly DependencyProperty IsPaneVisibleProperty =
 			DependencyProperty.RegisterAttached( "IsPaneVisible", typeof( bool ), typeof( AvalonDockHost ),
-			new FrameworkPropertyMetadata( true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
+			                                     new FrameworkPropertyMetadata( true, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault ) );
+
+		private readonly Dictionary<IAvalonDockViewModel, ManagedContent> _contents =
+			new Dictionary<IAvalonDockViewModel, ManagedContent>();
+
+		public AvalonDockHost()
+		{
+			InitializeComponent();
+		}
 
 		public IList<IAvalonDockViewModel> Panes
 		{
 			get { return ( IList<IAvalonDockViewModel> )GetValue( PanesProperty ); }
 			set { SetValue( PanesProperty, value ); }
 		}
+
 		public IList<IAvalonDockViewModel> Documents
 		{
 			get { return ( IList<IAvalonDockViewModel> )GetValue( DocumentsProperty ); }
 			set { SetValue( DocumentsProperty, value ); }
 		}
+
 		public IAvalonDockViewModel ActivePane
 		{
 			get { return ( IAvalonDockViewModel )GetValue( ActivePaneProperty ); }
 			set { SetValue( ActivePaneProperty, value ); }
 		}
+
 		public IAvalonDockViewModel ActiveDocument
 		{
 			get { return ( IAvalonDockViewModel )GetValue( ActiveDocumentProperty ); }
 			set { SetValue( ActiveDocumentProperty, value ); }
 		}
 
+		public DockingManager DockingManager
+		{
+			get { return dockingManager; }
+		}
+
 		public static void SetIsPaneVisible( UIElement element, bool value )
 		{
 			element.SetValue( IsPaneVisibleProperty, value );
 		}
+
 		public static bool GetIsPaneVisible( UIElement element )
 		{
 			return ( bool )element.GetValue( IsPaneVisibleProperty );
@@ -92,16 +105,6 @@ namespace MUtils
 
 		public event EventHandler<EventArgs> AvalonDockLoaded;
 		public event EventHandler<DocumentClosingEventArgs> DocumentClosing;
-
-		public DockingManager DockingManager
-		{
-			get { return dockingManager; }
-		}
-
-		public AvalonDockHost()
-		{
-			InitializeComponent();
-		}
 
 		private static void DockableContents_PropertyChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
 		{
@@ -129,6 +132,7 @@ namespace MUtils
 				}
 			}
 		}
+
 		private void dockableContents_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
 		{
 			if ( e.Action == NotifyCollectionChangedAction.Reset )
@@ -147,6 +151,7 @@ namespace MUtils
 				}
 			}
 		}
+
 		private static void Documents_PropertyChanged( DependencyObject d, DependencyPropertyChangedEventArgs e )
 		{
 			var c = d as AvalonDockHost;
@@ -173,6 +178,7 @@ namespace MUtils
 				}
 			}
 		}
+
 		private void documents_CollectionChanged( object sender, NotifyCollectionChangedEventArgs e )
 		{
 			if ( e.Action == NotifyCollectionChangedAction.Reset )
@@ -219,6 +225,7 @@ namespace MUtils
 				throw new ApplicationException( "Unexpected CollectionChanged event sender: " + sender.GetType().Name );
 			}
 		}
+
 		private void AddPanels( IEnumerable panels, bool isDocument )
 		{
 			foreach ( var panel in panels )
@@ -226,6 +233,7 @@ namespace MUtils
 				AddPanel( panel as IAvalonDockViewModel, isDocument );
 			}
 		}
+
 		private void AddPanel( IAvalonDockViewModel panel, bool isDocument )
 		{
 			ManagedContent managedContent = null;
@@ -248,6 +256,7 @@ namespace MUtils
 			managedContent.Show( DockingManager );
 			managedContent.Activate();
 		}
+
 		private void RemovePanels( IEnumerable<IAvalonDockViewModel> panels )
 		{
 			foreach ( var panel in panels )
@@ -255,6 +264,7 @@ namespace MUtils
 				RemovePanel( panel );
 			}
 		}
+
 		private void RemovePanel( IAvalonDockViewModel panel )
 		{
 			ManagedContent managedContent = null;
@@ -288,6 +298,7 @@ namespace MUtils
 					ActivePane = null;
 			}
 		}
+
 		private void document_Closing( object sender, CancelEventArgs e )
 		{
 			var documentContent = sender as DocumentContent;
@@ -307,6 +318,7 @@ namespace MUtils
 
 			documentContent.Closing -= document_Closing;
 		}
+
 		private void dockableContent_StateChanged( object sender, RoutedEventArgs e )
 		{
 			var dockableContent = sender as DockableContent;

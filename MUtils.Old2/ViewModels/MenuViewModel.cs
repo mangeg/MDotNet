@@ -6,8 +6,6 @@
 	[Export( typeof( MenuViewModel ) )]
 	public class MenuViewModel : PropertyChangedBase
 	{
-		public MenuViewModel()
-		{
-		}
+		public MenuViewModel() { }
 	}
 }

@@ -12,6 +12,7 @@
     <AssemblyName>MDotNet.Common</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -41,10 +42,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppInfo.cs" />
-    <Compile Include="IoC\IoC.cs" />
-    <Compile Include="IoC\IoCExtensions.cs" />
-    <Compile Include="IoC\IServiceLocator.cs" />
+    <Compile Include="OldIoC\IoC\ContainerBase.cs" />
+    <Compile Include="OldIoC\IoC\DefaultServiceLocator.cs" />
+    <Compile Include="OldIoC\IoC\IBuilder.cs" />
+    <Compile Include="OldIoC\IoC\IContainer.cs" />
+    <Compile Include="OldIoC\IoC\ICoponentRegistration.cs" />
+    <Compile Include="OldIoC\IoC\IoC.cs" />
+    <Compile Include="OldIoC\IoC\IoCExtensions.cs" />
+    <Compile Include="OldIoC\IoC\IRegistry.cs" />
+    <Compile Include="OldIoC\IoC\IServiceLocator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MDotNet.Logging\MDotNet.Logging.csproj">
+      <Project>{644EE405-7EDA-47B3-A939-14DDCC14FCED}</Project>
+      <Name>MDotNet.Logging</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -13,14 +13,17 @@
 		private static Dictionary<String, ILogLocator> _sLocators = new Dictionary<string, ILogLocator>();
 
 		/// <summary>
+		/// Sets the default locator.
+		/// </summary>
+		/// <param name="locator">The locator.</param>
+		public static void SetDefaultLocator( ILogLocator locator ) { _sDefaultLocator = locator; }
+
+		/// <summary>
 		/// Adds the keyed locator.
 		/// </summary>
 		/// <param name="key">The key.</param>
 		/// <param name="locator">The locator.</param>
-		public static void AddKeyedLocator( String key, ILogLocator locator )
-		{
-			_sLocators[ key ] = locator;
-		}
+		public static void AddKeyedLocator( String key, ILogLocator locator ) { _sLocators[ key ] = locator; }
 
 		/// <summary>
 		/// Removes the keyed locator.
@@ -37,20 +40,14 @@
 		/// </summary>
 		/// <param name="type">The type.</param>
 		/// <returns></returns>
-		public static ILog GetLog( Type type )
-		{
-			return _sDefaultLocator.TypedLocator( type );
-		}
+		public static ILog GetLog( Type type ) { return _sDefaultLocator.TypedLocator( type ); }
 
 		/// <summary>
 		/// Gets the log.
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public static ILog GetLog<T>()
-		{
-			return GetLog( typeof( T ) );
-		}
+		public static ILog GetLog<T>() { return GetLog( typeof( T ) ); }
 
 		/// <summary>
 		/// Gets the log.
@@ -71,10 +68,7 @@
 		/// </summary>
 		/// <param name="name">The name.</param>
 		/// <returns>The named <see cref="ILog"/></returns>
-		public static ILog GetNamedLog( String name )
-		{
-			return _sDefaultLocator.NamedLocator( name );
-		}
+		public static ILog GetNamedLog( String name ) { return _sDefaultLocator.NamedLocator( name ); }
 
 		/// <summary>
 		/// Gets the log for a specific key.
@@ -100,10 +94,7 @@
 		/// <typeparam name="T">The type to get the log for</typeparam>
 		/// <param name="key">The key.</param>
 		/// <returns>The typed <see cref="ILog"/> for the specified key</returns>
-		public static ILog GetLog<T>( String key )
-		{
-			return GetLog( typeof( T ), key );
-		}
+		public static ILog GetLog<T>( String key ) { return GetLog( typeof( T ), key ); }
 
 		/// <summary>
 		/// Gets the log for a specific key.

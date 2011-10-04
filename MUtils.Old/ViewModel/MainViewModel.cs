@@ -1,22 +1,19 @@
-﻿using System;
-using System.ComponentModel.Composition;
-using System.Windows.Input;
-using MEFedMVVM.Common;
-using MEFedMVVM.Services.Contracts;
-using MEFedMVVM.ViewModelLocator;
-using MUtils.Service.Contracts;
-using MUtils.View;
-
-namespace MUtils.ViewModel
+﻿namespace MUtils.ViewModel
 {
+	using System;
+	using System.ComponentModel.Composition;
+	using System.Windows.Input;
+	using MEFedMVVM.Common;
+	using MEFedMVVM.Services.Contracts;
+	using MEFedMVVM.ViewModelLocator;
+	using Service.Contracts;
+	using View;
+
 	[PartCreationPolicy( CreationPolicy.NonShared )]
 	[ExportViewModel( "MainVM" )]
 	public class MainViewModel : NotifyPropertyChangedBase
 	{
 		private const String LayoutFile = @"Layout.xml";
-
-		public AvalonDockHost Host { get; private set; }
-		public ICommand ClosingCmd { get; private set; }
 
 		[ImportingConstructor]
 		public MainViewModel( IMediator mediator, ILayoutContentService layout )
@@ -33,9 +30,9 @@ namespace MUtils.ViewModel
 			new ApplicationPane();
 		}
 
-		void Host_AvalonDockLoaded( object sender, EventArgs e )
-		{
-			Host.DockingManager.RestoreLayout( LayoutFile );
-		}
+		public AvalonDockHost Host { get; private set; }
+		public ICommand ClosingCmd { get; private set; }
+
+		private void Host_AvalonDockLoaded( object sender, EventArgs e ) { Host.DockingManager.RestoreLayout( LayoutFile ); }
 	}
 }

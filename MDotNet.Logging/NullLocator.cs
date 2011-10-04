@@ -6,6 +6,14 @@ namespace MDotNet.Logging
 	{
 		private NullLog _log = new NullLog();
 
+		public NullLocator()
+		{
+			TypedLocator = type => _log;
+			NamedLocator = name => _log;
+		}
+
+		#region ILogLocator Members
+
 		/// <summary>
 		/// Gets the typed locator.
 		/// </summary>
@@ -16,10 +24,6 @@ namespace MDotNet.Logging
 		/// </summary>
 		public Func<string, ILog> NamedLocator { get; private set; }
 
-		public NullLocator()
-		{
-			TypedLocator = type => _log;
-			NamedLocator = name => _log;
-		}
+		#endregion
 	}
 }

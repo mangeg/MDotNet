@@ -1,20 +1,42 @@
-using System;
-using System.IO;
-using System.Text;
-using System.Xml;
-using System.Xml.Serialization;
-using MDotNet.Extensions;
-
 namespace MDotNet.Settings.Targets
 {
+	using System;
+	using System.IO;
+	using System.Text;
+	using System.Xml;
+	using System.Xml.Serialization;
+	using Extensions;
+
 	/// <summary>
 	/// Xml target for SettingsManager.
 	/// </summary>
 	/// <typeparam name="T">The type this target loads and saves.</typeparam>
 	public class XmlTarget<T> : ITarget where T : class, new()
 	{
-		private readonly XmlSerializer _xmls;// = new XmlSerializer( typeof( T ) );
+		private readonly XmlSerializer _xmls; // = new XmlSerializer( typeof( T ) );
 		private readonly XmlWriterSettings _xmlwSettings;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="XmlTarget&lt;T&gt;"/> class.
+		/// </summary>
+		public XmlTarget()
+		{
+			_xmls = new XmlSerializer( typeof( T ) );
+			FailSilent = true;
+			_xmlwSettings = new XmlWriterSettings
+				{
+					Indent = true,
+					IndentChars = "\t",
+					Encoding = Encoding.UTF8,
+				};
+		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="XmlTarget&lt;T&gt;"/> class.
+		/// </summary>
+		/// <param name="filename">The filename.</param>
+		public XmlTarget( string filename )
+			: this() { Filename = filename; }
 
 		/// <summary>
 		/// Gets or sets the filename.
@@ -23,6 +45,7 @@ namespace MDotNet.Settings.Targets
 		/// The filename.
 		/// </value>
 		public String Filename { get; set; }
+
 		/// <summary>
 		/// Gets or sets a value indicating whether it should fail silently
 		/// and only produce log message. While in none silent mode it will
@@ -33,6 +56,8 @@ namespace MDotNet.Settings.Targets
 		/// </value>
 		public bool FailSilent { get; set; }
 
+		#region ITarget Members
+
 		/// <summary>
 		/// Gets or sets the value.
 		/// </summary>
@@ -40,29 +65,6 @@ namespace MDotNet.Settings.Targets
 		/// The value.
 		/// </value>
 		public object Value { get; set; }
-
-		/// <summary>
-		/// Initializes a new instance of the <see cref="XmlTarget&lt;T&gt;"/> class.
-		/// </summary>
-		public XmlTarget()
-		{
-			_xmls = new XmlSerializer( typeof( T ) );
-			FailSilent = true;
-			_xmlwSettings = new XmlWriterSettings {
-				Indent = true,
-				IndentChars = "\t",
-				Encoding = Encoding.UTF8,
-			};
-		}
-		/// <summary>
-		/// Initializes a new instance of the <see cref="XmlTarget&lt;T&gt;"/> class.
-		/// </summary>
-		/// <param name="filename">The filename.</param>
-		public XmlTarget( string filename )
-			: this()
-		{
-			Filename = filename;
-		}
 
 		/// <summary>
 		/// Saves the value of this target.
@@ -103,6 +105,7 @@ namespace MDotNet.Settings.Targets
 					throw ex;
 			}
 		}
+
 		/// <summary>
 		/// Loads the value for this target.
 		/// </summary>
@@ -132,7 +135,8 @@ namespace MDotNet.Settings.Targets
 				if ( !FailSilent )
 					throw ex;
 			}
-
 		}
+
+		#endregion
 	}
 }

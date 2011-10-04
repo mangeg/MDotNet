@@ -13,16 +13,6 @@
 		private static LogFactory _sFactory = new LogFactory();
 
 		/// <summary>
-		/// Gets the typed locator.
-		/// </summary>
-		public Func<Type, ILog> TypedLocator { get; private set; }
-
-		/// <summary>
-		/// Gets the named locator.
-		/// </summary>
-		public Func<string, ILog> NamedLocator { get; private set; }
-
-		/// <summary>
 		/// Initializes a new instance of the <see cref="NLogLocator"/> class.
 		/// </summary>
 		public NLogLocator()
@@ -32,6 +22,20 @@
 			TypedLocator = type => new NLogWrapper( _sFactory.GetLogger( type.FullName ) );
 			NamedLocator = name => new NLogWrapper( _sFactory.GetLogger( name ) );
 		}
+
+		#region ILogLocator Members
+
+		/// <summary>
+		/// Gets the typed locator.
+		/// </summary>
+		public Func<Type, ILog> TypedLocator { get; private set; }
+
+		/// <summary>
+		/// Gets the named locator.
+		/// </summary>
+		public Func<string, ILog> NamedLocator { get; private set; }
+
+		#endregion
 
 		/// <summary>
 		/// Gets a default console log config.

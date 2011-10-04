@@ -1,5 +1,7 @@
 namespace MDotNet.Logging
 {
+	using System;
+
 	/// <summary>
 	/// Interface for logger.
 	/// </summary>
@@ -39,6 +41,12 @@ namespace MDotNet.Logging
 		/// <param name="format">The format string or just the message.</param>
 		/// <param name="args">The args.</param>
 		void Error( string format, params object[] args );
+
+		/// <summary>
+		/// Log specified exception as an error.
+		/// </summary>
+		/// <param name="exception">The exception.</param>
+		void Error( Exception exception );
 
 		/// <summary>
 		/// Shutdowns this instance.

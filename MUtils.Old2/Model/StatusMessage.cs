@@ -1,18 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MUtils.Model
+﻿namespace MUtils.Model
 {
+	using System;
+
 	public class StatusMessage
 	{
+		public StatusMessage() { TimeStamp = DateTime.Now; }
 		public DateTime TimeStamp { get; set; }
 		public String Message { get; set; }
-
-		public StatusMessage()
-		{
-			TimeStamp = DateTime.Now;
-		}
 	}
 }

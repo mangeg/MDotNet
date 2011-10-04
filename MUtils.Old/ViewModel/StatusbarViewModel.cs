@@ -1,21 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel.Composition;
-using MEFedMVVM.Common;
-using MEFedMVVM.Services.CommonServices;
-using MEFedMVVM.Services.Contracts;
-using MEFedMVVM.ViewModelLocator;
-using MUtils.Model;
-
-namespace MUtils.ViewModel
+﻿namespace MUtils.ViewModel
 {
+	using System;
+	using System.Collections.Generic;
+	using System.Collections.ObjectModel;
+	using System.ComponentModel.Composition;
+	using MEFedMVVM.Common;
+	using MEFedMVVM.Services.CommonServices;
+	using MEFedMVVM.Services.Contracts;
+	using MEFedMVVM.ViewModelLocator;
+	using Model;
+
 	[ExportViewModel( "StatusbarVM" )]
 	public class StatusbarViewModel : NotifyPropertyChangedBase
 	{
-		private IMediator _mediator;
 		private String _lastString;
+		private IMediator _mediator;
 		private ObservableCollection<StatusMessage> _messages = new ObservableCollection<StatusMessage>();
+
+		[ImportingConstructor]
+		public StatusbarViewModel( IMediator mediator )
+		{
+			_mediator = mediator;
+
+			mediator.Register( this );
+		}
 
 		public String LastMessage
 		{
@@ -27,17 +35,10 @@ namespace MUtils.ViewModel
 				OnPropertyChanged( () => LastMessage );
 			}
 		}
+
 		public IList<StatusMessage> AllMessages
 		{
 			get { return _messages; }
-		}
-
-		[ImportingConstructor]
-		public StatusbarViewModel( IMediator mediator )
-		{
-			_mediator = mediator;
-
-			mediator.Register( this );
 		}
 
 		[MediatorMessageSink( MediatorMessages.StatusMessage, ParameterType = typeof( String ) )]

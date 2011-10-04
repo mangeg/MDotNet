@@ -1,7 +1,6 @@
 ﻿namespace MUtils
 {
 	using System.Windows;
-	using MDotNet.Logging;
 
 	/// <summary>
 	/// Interaction logic for App.xaml
@@ -11,7 +10,7 @@
 		public App()
 		{
 			Caliburn.Micro.LogManager.GetLog = ( type ) =>
-				new Logging.CaliburnLogWrapper( MDotNet.Logging.LogManager.GetLog( type ) );
+			                                   new Logging.CaliburnLogWrapper( MDotNet.Logging.LogManager.GetLog( type ) );
 		}
 	}
 }

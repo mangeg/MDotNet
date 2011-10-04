@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Windows;
-using MDotNet.Settings;
-
-namespace MUtils.Settings
+﻿namespace MUtils.Settings
 {
+	using System.Windows;
+	using MDotNet.Settings;
+
 	public class MainSettings : SettingsBase
 	{
 		public MainSettings()

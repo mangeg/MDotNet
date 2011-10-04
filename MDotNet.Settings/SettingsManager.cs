@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using MDotNet.Settings.Targets;
-
-namespace MDotNet.Settings
+﻿namespace MDotNet.Settings
 {
+	using System;
+	using System.Collections.Generic;
+	using Targets;
+
 	/// <summary>
 	/// Settings manager that can load and save settings with different targets.
 	/// </summary>
@@ -33,6 +33,7 @@ namespace MDotNet.Settings
 
 			return target;
 		}
+
 		/// <summary>
 		/// Saves the settings.
 		/// </summary>
@@ -51,6 +52,7 @@ namespace MDotNet.Settings
 			target.Value = _sObjects[ type ];
 			target.Save();
 		}
+
 		/// <summary>
 		/// Loads the settings.
 		/// </summary>
@@ -69,15 +71,15 @@ namespace MDotNet.Settings
 			{
 				if ( !_sObjects.ContainsKey( type ) )
 				{
-					_sObjects.Add( type, (T) target.Value );
+					_sObjects.Add( type, ( T )target.Value );
 				}
 				else
 				{
 					_sObjects[ type ] = ( T )target.Value;
 				}
 			}
-			
 		}
+
 		/// <summary>
 		/// Gets the specific settings.
 		/// </summary>

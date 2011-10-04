@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Windows;
-using MDotNet.Settings;
-using MDotNet.Settings.Targets;
-using MUtils.Settings;
-
-namespace MUtils
+﻿namespace MUtils
 {
+	using System.Windows;
+	using MDotNet.Settings;
+	using MDotNet.Settings.Targets;
+	using Settings;
+
 	/// <summary>
 	/// Interaction logic for App.xaml
 	/// </summary>
